@@ -20,16 +20,20 @@ body {
  font-size: 1.125rem;
 }
 
-#body-wrapper {
+#header-wrapper {
  background: url("./assets/images/pattern-bg-desktop.png") no-repeat;
  background-position: 50% 50%;
  background-size: cover;
 }
 
 @media (max-width: 560px) {
- #body-wrapper {
+ #header-wrapper {
   background: url("./assets/images/pattern-bg-mobile.png") no-repeat;
   background-position: 50% 50%;
   background-size: cover;
  }
+}
+
+#map {
+ height: 80vmin;
 }
