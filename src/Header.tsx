@@ -4,6 +4,9 @@ import useSWR from "swr";
 import {IPIFY_API_KEY} from "./lib/envfile";
 import {ApiResponse} from "./utils/apiResponse";
 import {useState} from "react";
+// import {atom, useAtom} from "jotai";
+
+// const coordinates = atom("Coordinates");
 
 const fetcher = (url: string) =>
  fetch(url)

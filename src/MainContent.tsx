@@ -3,9 +3,7 @@ import {useState} from "react";
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 
 export default function MainContent() {
- const [position, setPosition] = useState<LatLngExpression | null>([
-  -1.286389, 36.817223,
- ]);
+ const [position] = useState<LatLngExpression>([-1.286389, 36.817223]);
 
  return (
   <div id="map" className="w-full">
@@ -20,7 +18,7 @@ export default function MainContent() {
      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
     <Marker position={position}>
-     <Popup>
+     <Popup className="text-very-dark-grey">
       A pretty CSS3 popup. <br /> Easily customizable.
      </Popup>
     </Marker>
