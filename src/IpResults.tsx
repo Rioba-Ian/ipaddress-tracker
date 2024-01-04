@@ -20,24 +20,24 @@ export default function IpResults({
  const resultsSection: JSX.Element = (
   <div
    id="results-wrapper"
-   className="sm:px-10 grid grid-cols-1 sm:grid-cols-4 place-content-center sm:place-content-evenly"
+   className="sm:px-10 grid grid-cols-1 grid-rows-4 sm:grid-rows-1 sm:grid-cols-4 place-items-center sm:place-content-evenly"
   >
-   <div id="ipaddress" className="">
+   <div id="ipaddress" className="text-center sm:text-left">
     <h2 className="">Ip address</h2>
     <p>{data?.ip}</p>
    </div>
-   <div id="location" className="sm:border-l-2 sm:border-gray-400">
+   <div id="location" className="text-center sm:text-left">
     <h2>Location</h2>
     <p>
      {data?.location?.city}, {data?.location?.region}
     </p>
     <p>{data?.location?.postalCode}</p>
    </div>
-   <div id="timezone" className="">
+   <div id="timezone" className="text-center sm:text-left">
     <h2>Timezone</h2>
     <p>{data?.location?.timezone}</p>
    </div>
-   <div id="ISP" className="">
+   <div id="ISP" className="text-center sm:text-left">
     <h2>ISP</h2>
     <p>{data?.isp}</p>
    </div>
