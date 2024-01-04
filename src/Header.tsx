@@ -5,7 +5,15 @@ import {IPIFY_API_KEY} from "./lib/envfile";
 import {ApiResponse} from "./utils/apiResponse";
 import {useState} from "react";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) =>
+ fetch(url)
+  .then((res) => res.json())
+  .then((data) => {
+   if (data.code === 422) {
+    throw new Error(data.messages);
+   }
+   return data;
+  });
 
 export default function Header() {
  const [ipAddress, setIpAddress] = useState<string>("192.212.174.101");
@@ -54,7 +62,12 @@ export default function Header() {
     </form>
    </div>
    <div id="container-wrapper">
-    <IpResults data={data} isError={error} isLoading={isLoading} />
+    <IpResults
+     data={data}
+     isError={error}
+     isLoading={isLoading}
+     errorMesage={error?.message}
+    />
    </div>
   </header>
  );

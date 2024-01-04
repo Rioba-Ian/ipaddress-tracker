@@ -49,8 +49,13 @@ body {
  position: relative;
 }
 
-#results-wrapper div {
- outline: auto;
+#results-wrapper div + div {
+ /* outline: auto; */
+ @apply sm:pl-8 sm:border-l-2 border-gray-400;
+}
+
+.border-left {
+ border-left: 1px solid grey;
 }
 
 #results-wrapper p {
