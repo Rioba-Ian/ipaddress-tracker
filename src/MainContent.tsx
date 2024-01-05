@@ -7,20 +7,25 @@ import {
  Popup,
  useMapEvents,
 } from "react-leaflet";
+import * as L from "leaflet";
 import {useAtom} from "jotai";
 import apiDataAtom from "./lib/apiDataAtom";
+import LocationIcon from "./assets/images/icon-location.svg";
 
 function LocationMarker() {
  const [position, setPosition] = useState<LatLngExpression | null>(null);
  const [data] = useAtom(apiDataAtom);
-
- console.log(data);
 
  const map = useMapEvents({
   locationfound(e) {
    setPosition([e.latlng.lat, e.latlng.lng]);
    map.flyTo([e.latlng.lat, e.latlng.lng], map.getZoom());
   },
+ });
+
+ const myIcon = L.icon({
+  iconUrl: LocationIcon,
+  iconSize: [38, 45],
  });
 
  useEffect(() => {
@@ -35,7 +40,7 @@ function LocationMarker() {
  }, [data, map]);
 
  return position === null ? null : (
-  <Marker position={position}>
+  <Marker position={position} icon={myIcon}>
    <Popup>You are here</Popup>
   </Marker>
  );
