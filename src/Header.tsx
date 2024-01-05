@@ -87,7 +87,7 @@ export default function Header() {
    </div>
    <div id="container-wrapper">
     <IpResults
-     data={data}
+     data={data || null}
      isError={error}
      isLoading={isLoading}
      errorMesage={error?.message}

@@ -66,6 +66,17 @@ export default function IpResults({
   );
  }
 
+ if (!data) {
+  return (
+   <div
+    className="bg-white absolute top-6 sm:top-16 rounded-xl w-[100%] py-8 sm:py-10"
+    style={{zIndex: 999}}
+   >
+    <div className="text-center">No data</div>
+   </div>
+  );
+ }
+
  return (
   <div
    className="bg-white absolute top-6 sm:top-16 rounded-xl w-[100%] py-8 sm:py-10"
