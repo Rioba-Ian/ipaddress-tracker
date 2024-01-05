@@ -5,7 +5,7 @@ import {IPIFY_API_KEY} from "./lib/envfile";
 import {ApiResponse} from "./utils/apiResponse";
 import {useEffect, useState} from "react";
 import {useAtom} from "jotai";
-import apiDataAtom, {userLocationOnLoad} from "./lib/apiDataAtom";
+import apiDataAtom from "./lib/apiDataAtom";
 
 const fetcher = (url: string) =>
  fetch(url)
@@ -21,16 +21,26 @@ export default function Header() {
  const [ipAddress, setIpAddress] = useState<string | null>(null);
  const [userInput, setUserInput] = useState<string>("");
  const [, setCoordinatesAPi] = useAtom(apiDataAtom);
- const [userLocation] = useAtom(userLocationOnLoad);
+ const [ipAddressonLoad, setIpAddressonLoad] = useState<string | null>(null);
 
  const {data, error, isLoading, mutate} = useSWR<ApiResponse | null>(
   ipAddress
    ? `https://geo.ipify.org/api/v2/country,city?apiKey=${IPIFY_API_KEY}&ipAddress=${ipAddress}`
-   : null,
+   : `https://geo.ipify.org/api/v2/country,city?apiKey=${IPIFY_API_KEY}&ipAddress=${ipAddressonLoad}`,
   fetcher
  );
 
- console.log(userLocation);
+ //  use a normal fetch to get the user's Ip address once they open the app
+ useEffect(() => {
+  fetch("https://api.ipify.org?format=json")
+   .then((res) => {
+    return res.json();
+   })
+   .then((data) => {
+    console.log(data);
+    setIpAddressonLoad(data.ip);
+   });
+ }, []);
 
  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
   setUserInput(e.target.value);
@@ -44,8 +54,6 @@ export default function Header() {
  };
 
  useEffect(() => {
-  console.log(data);
-
   if (data && ipAddress && !error) {
    setCoordinatesAPi(data);
   }

@@ -8,15 +8,13 @@ import {
  useMapEvents,
 } from "react-leaflet";
 import {useAtom} from "jotai";
-import apiDataAtom, {userLocationOnLoad} from "./lib/apiDataAtom";
+import apiDataAtom from "./lib/apiDataAtom";
 
 function LocationMarker() {
  const [position, setPosition] = useState<LatLngExpression | null>(null);
- const [, setUserLocation] = useAtom(userLocationOnLoad);
  const map = useMapEvents({
   locationfound(e) {
    setPosition([e.latlng.lat, e.latlng.lng]);
-   setUserLocation([e.latlng.lat, e.latlng.lng]);
    map.flyTo([e.latlng.lat, e.latlng.lng], map.getZoom());
   },
  });
