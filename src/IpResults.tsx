@@ -35,7 +35,7 @@ export default function IpResults({
    </div>
    <div id="timezone" className="text-center sm:text-left">
     <h2>Timezone</h2>
-    <p>{data?.location?.timezone}</p>
+    <p>UTC {data?.location?.timezone}</p>
    </div>
    <div id="ISP" className="text-center sm:text-left">
     <h2>ISP</h2>
