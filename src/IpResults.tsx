@@ -1,7 +1,7 @@
 import {ApiResponse} from "./utils/apiResponse";
 
 interface IpResultsProps {
- data: ApiResponse | undefined;
+ data: ApiResponse | null;
  isError: boolean;
  isLoading: boolean;
  errorMesage: string | null;

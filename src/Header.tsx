@@ -86,14 +86,12 @@ export default function Header() {
     </form>
    </div>
    <div id="container-wrapper">
-    {data && (
-     <IpResults
-      data={data}
-      isError={error}
-      isLoading={isLoading}
-      errorMesage={error?.message}
-     />
-    )}
+    <IpResults
+     data={data}
+     isError={error}
+     isLoading={isLoading}
+     errorMesage={error?.message}
+    />
    </div>
   </header>
  );

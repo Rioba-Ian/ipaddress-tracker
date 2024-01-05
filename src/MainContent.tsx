@@ -12,6 +12,10 @@ import apiDataAtom from "./lib/apiDataAtom";
 
 function LocationMarker() {
  const [position, setPosition] = useState<LatLngExpression | null>(null);
+ const [data] = useAtom(apiDataAtom);
+
+ console.log(data);
+
  const map = useMapEvents({
   locationfound(e) {
    setPosition([e.latlng.lat, e.latlng.lng]);
@@ -22,6 +26,13 @@ function LocationMarker() {
  useEffect(() => {
   map.locate();
  }, []);
+
+ useEffect(() => {
+  if (data) {
+   setPosition([data.location.lat, data.location.lng]);
+   map.flyTo([data.location.lat, data.location.lng], map.getZoom());
+  }
+ }, [data, map]);
 
  return position === null ? null : (
   <Marker position={position}>
