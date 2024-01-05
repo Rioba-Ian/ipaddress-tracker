@@ -5,7 +5,7 @@ import {IPIFY_API_KEY} from "./lib/envfile";
 import {ApiResponse} from "./utils/apiResponse";
 import {useEffect, useState} from "react";
 import {useAtom} from "jotai";
-import apiDataAtom from "./lib/apiDataAtom";
+import apiDataAtom, {userLocationOnLoad} from "./lib/apiDataAtom";
 
 const fetcher = (url: string) =>
  fetch(url)
@@ -18,14 +18,19 @@ const fetcher = (url: string) =>
   });
 
 export default function Header() {
- const [ipAddress, setIpAddress] = useState<string>("192.212.174.101");
+ const [ipAddress, setIpAddress] = useState<string | null>(null);
  const [userInput, setUserInput] = useState<string>("");
  const [, setCoordinatesAPi] = useAtom(apiDataAtom);
+ const [userLocation] = useAtom(userLocationOnLoad);
 
- const {data, error, isLoading, mutate} = useSWR<ApiResponse>(
-  `https://geo.ipify.org/api/v2/country,city?apiKey=${IPIFY_API_KEY}&ipAddress=${ipAddress}`,
+ const {data, error, isLoading, mutate} = useSWR<ApiResponse | null>(
+  ipAddress
+   ? `https://geo.ipify.org/api/v2/country,city?apiKey=${IPIFY_API_KEY}&ipAddress=${ipAddress}`
+   : null,
   fetcher
  );
+
+ console.log(userLocation);
 
  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
   setUserInput(e.target.value);
@@ -73,12 +78,14 @@ export default function Header() {
     </form>
    </div>
    <div id="container-wrapper">
-    <IpResults
-     data={data}
-     isError={error}
-     isLoading={isLoading}
-     errorMesage={error?.message}
-    />
+    {data && (
+     <IpResults
+      data={data}
+      isError={error}
+      isLoading={isLoading}
+      errorMesage={error?.message}
+     />
+    )}
    </div>
   </header>
  );
