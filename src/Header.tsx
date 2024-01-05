@@ -3,10 +3,9 @@ import IconArrow from "./assets/images/icon-arrow.svg";
 import useSWR from "swr";
 import {IPIFY_API_KEY} from "./lib/envfile";
 import {ApiResponse} from "./utils/apiResponse";
-import {useState} from "react";
-// import {atom, useAtom} from "jotai";
-
-// const coordinates = atom("Coordinates");
+import {useEffect, useState} from "react";
+import {useAtom} from "jotai";
+import apiDataAtom from "./lib/apiDataAtom";
 
 const fetcher = (url: string) =>
  fetch(url)
@@ -21,6 +20,7 @@ const fetcher = (url: string) =>
 export default function Header() {
  const [ipAddress, setIpAddress] = useState<string>("192.212.174.101");
  const [userInput, setUserInput] = useState<string>("");
+ const [, setCoordinatesAPi] = useAtom(apiDataAtom);
 
  const {data, error, isLoading, mutate} = useSWR<ApiResponse>(
   `https://geo.ipify.org/api/v2/country,city?apiKey=${IPIFY_API_KEY}&ipAddress=${ipAddress}`,
@@ -37,6 +37,14 @@ export default function Header() {
   setIpAddress(userInput);
   mutate();
  };
+
+ useEffect(() => {
+  console.log(data);
+
+  if (data && ipAddress && !error) {
+   setCoordinatesAPi(data);
+  }
+ }, [data, error, ipAddress, setCoordinatesAPi]);
 
  return (
   <header className="py-[25vmin] sm:py-[10vmin]">

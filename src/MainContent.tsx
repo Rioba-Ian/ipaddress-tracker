@@ -1,8 +1,11 @@
 import {LatLngExpression} from "leaflet";
 import {useState} from "react";
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
+import {useAtom} from "jotai";
+import apiDataAtom from "./lib/apiDataAtom";
 
 export default function MainContent() {
+ const [data] = useAtom(apiDataAtom);
  const [position] = useState<LatLngExpression>([-1.286389, 36.817223]);
 
  return (
@@ -17,7 +20,9 @@ export default function MainContent() {
      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
-    <Marker position={position}>
+    <Marker
+     position={data ? [data.location.lat, data?.location.lng] : position}
+    >
      <Popup className="text-very-dark-grey">
       A pretty CSS3 popup. <br /> Easily customizable.
      </Popup>
